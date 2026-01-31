@@ -1,5 +1,16 @@
-import { Controller, Get, HttpCode, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Query,
+  Req,
+  Res,
+} from '@nestjs/common';
 import type { Request, Response } from 'express';
+import { ValidateuserPipe } from './pipes/validateuser/validateuser.pipe';
 
 @Controller()
 export class HelloController {
@@ -13,7 +24,7 @@ export class HelloController {
 
   @Get('new')
   @HttpCode(201)
-  somethingNew(){
+  somethingNew() {
     return 'This is something new!';
   }
 
@@ -27,5 +38,23 @@ export class HelloController {
   @HttpCode(500)
   errorPage() {
     return 'Error route';
+  }
+
+  @Get('ticket/:num')
+  getNumber(@Param('num', ParseIntPipe) num: number) {
+    return num + 14;
+  }
+
+  @Get('status/:active')
+  statusUser(@Param('active', ParseBoolPipe) active: boolean) {
+    console.log(typeof active);
+    return active;
+  }
+
+  @Get('greet')
+  greet(@Query(ValidateuserPipe) query: { name: string; age: number }) {
+    console.log(typeof query.age);
+    console.log(typeof query.name);
+    return `Hello, ${query.name}. You are ${query.age} years old.`;
   }
 }
