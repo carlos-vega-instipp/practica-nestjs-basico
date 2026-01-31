@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Put,
@@ -24,6 +25,11 @@ export class TasksController {
     // petición a otro backend o api
     console.log(query);
     return this.tasksService.getAllTasks();
+  }
+
+  @Get('/:id')
+  getTask(@Param('id') id: string) {
+    return this.tasksService.getTask(parseInt(id));
   }
 
   @Post()
