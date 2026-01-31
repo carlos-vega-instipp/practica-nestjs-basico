@@ -10,6 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
+import type { CreateTaskDto } from './dto/create-task.dto';
+import type { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('/tasks')
 export class TasksController {
@@ -35,15 +37,15 @@ export class TasksController {
   }
 
   @Post()
-  createTask(@Body() task: any) {
+  createTask(@Body() task: CreateTaskDto) {
     return this.tasksService.createTask(task);
   }
 
   @Put()
-  updateTask() {
+  updateTask(@Body() task: UpdateTaskDto) {
     //buscar en base de datos
     // petición a otro backend o api
-    return this.tasksService.updateTask();
+    return this.tasksService.updateTask(task);
   }
 
   @Delete()
