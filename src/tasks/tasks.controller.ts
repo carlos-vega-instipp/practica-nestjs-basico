@@ -21,14 +21,16 @@ export class TasksController {
 
   @Get()
   getAllTasks(@Query() query: any) {
+    // de la url se obtiene/n el/los ?variable=valor por ejemplo httpos://localhost:3000/tasks?completed=true en ese caso ?completed=true
     //buscar en base de datos
     // petición a otro backend o api
-    console.log(query);
+    console.log('query', query);
     return this.tasksService.getAllTasks();
   }
 
   @Get('/:id')
   getTask(@Param('id') id: string) {
+    console.log('param: ', id);
     return this.tasksService.getTask(parseInt(id));
   }
 

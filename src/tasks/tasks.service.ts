@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotFoundError } from 'rxjs';
 
 export interface User {
   name: string;
@@ -18,7 +19,13 @@ export class TasksService {
   }
 
   getTask(id: number) {
-    return this.tasks.find((task) => task.id === id);
+    const taskFound = this.tasks.find((task) => task.id === id);
+
+    if (!taskFound) {
+      return new NotFoundException('Task not found');
+    }
+
+    return taskFound;
   }
 
   createTask(task: any) {
