@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TasksModule } from './tasks/tasks.module';
 import { ProjectsModule } from './projects/projects.module';
 import { AuthModule } from './auth/auth.module';
@@ -7,7 +8,14 @@ import { HelloController } from './hello/hello.controller';
 import { PaymentsModule } from './payments/payments.module';
 
 @Module({
-  imports: [TasksModule, ProjectsModule, AuthModule, UsersModule, PaymentsModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    TasksModule,
+    ProjectsModule,
+    AuthModule,
+    UsersModule,
+    PaymentsModule,
+  ],
   controllers: [HelloController],
 })
 export class AppModule {}
